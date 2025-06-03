@@ -1,8 +1,37 @@
-name: hello-world
-on: push
+# github generated
+# name: hello-world
+# on: push
+# jobs:
+#   my-job:
+#     runs-on: ubuntu-22.04
+#     steps:
+#       - name: my-step
+#         run: echo "Hello World!"
+
+name: Build Docker Image
+
+on:
+  push:
+    branches:
+      - main   # or master, your default branch
+
 jobs:
-  my-job:
+  build:
     runs-on: ubuntu-22.04
+
     steps:
-      - name: my-step
-        run: echo "Hello World!"
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build Docker image
+      run: |
+        docker build -t test-express-app .
+
+    - name: Save Docker image as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: docker-image
+        path: ./docker-image.tar
+
+    - name: Save Docker image to tar file
+      run: docker save test-express-app -o docker-image.tar
