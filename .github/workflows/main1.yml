@@ -28,7 +28,7 @@ jobs:
         docker build -t test-express-app .
 
     - name: Save Docker image as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3.1.3
       with:
         name: docker-image
         path: ./docker-image.tar
